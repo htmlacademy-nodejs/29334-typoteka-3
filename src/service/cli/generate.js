@@ -2,6 +2,7 @@
 
 const fs = require(`fs`);
 const chalk = require(`chalk`);
+const util = require(`util`);
 const { getRandomInt, shuffle } = require(`../../utils.js`);
 const { ExitCode, DAY_LENGTH_MILLISECONDS } = require(`../../constants.js`);
 const {
@@ -32,7 +33,7 @@ const generatePosts = (cnt) => {
 
 module.exports = {
   name: `--generate`,
-  run(args) {
+  async run(args) {
     const [cnt] = args;
     const countPosts = Number.parseInt(cnt, 10) || DEFAULT_COUNT;
     if (countPosts > MAX_POSTS) {
@@ -41,15 +42,24 @@ module.exports = {
     }
 
     const content = JSON.stringify(generatePosts(countPosts));
-
-    fs.writeFile(FILE_NAME, content, (err) => {
-      if (err) {
-        console.error(chalk.red(`Can't write data to file...`));
-        process.exit(ExitCode.error);
-      }
-
+    // const wFiles = util.promisify(fs.writeFile);
+    try {
+      await util.promisify(fs.writeFile)(FILE_NAME, content);
+      // await wFiles(FILE_NAME, content);
       console.info(chalk.green(`Operation success. File created.`));
       process.exit(ExitCode.success);
-    });
+    } catch (err) {
+      console.error(chalk.red(`Can't write data to file...`));
+      process.exit(ExitCode.error);
+    }
+    // fs.writeFile(FILE_NAME, content, (err) => {
+    //   if (err) {
+    //     console.error(chalk.red(`Can't write data to file...`));
+    //     process.exit(ExitCode.error);
+    //   }
+
+    //   console.info(chalk.green(`Operation success. File created.`));
+    //   process.exit(ExitCode.success);
+    // });
   },
 };
