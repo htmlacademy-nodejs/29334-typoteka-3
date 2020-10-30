@@ -7,6 +7,6 @@ module.exports = {
   name: `--version`,
   run() {
     const version = packageJsonFile.version;
-    console.info(chalk.magenta(version));
+    console.info(chalk.blue(version));
   },
 };
