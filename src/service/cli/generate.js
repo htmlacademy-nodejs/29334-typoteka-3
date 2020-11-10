@@ -1,5 +1,6 @@
 "use strict";
 
+
 const chalk = require(`chalk`);
 const fs = require(`fs`).promises;
 const { getRandomInt, shuffle } = require(`../../utils.js`);
@@ -20,6 +21,7 @@ const readContent = async (filePath) => {
     return [];
   }
 };
+
 
 const generatePosts = (cnt, titles, announces, categories) => {
   return new Array(cnt).fill(``).map(() => {
