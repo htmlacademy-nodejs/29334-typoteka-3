@@ -17,10 +17,13 @@ const HttpCode = {
   UNAUTHORIZED: 401,
 };
 
+const PORT = 8080;
+
 module.exports = {
   DEFAULT_COMMAND,
   USER_ARGV_INDEX,
   ExitCode,
   DAY_LENGTH_MILLISECONDS,
   HttpCode,
+  PORT,
 };
