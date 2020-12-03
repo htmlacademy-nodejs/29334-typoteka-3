@@ -1,21 +1,17 @@
 "use strict";
 
-const { Router } = require(`express`);
-const articlesRouter = new Router();
+const {Router} = require(`express`);
+const articlesRoutes = new Router();
 
-articlesRouter.get(`/add`, (req, res) => res.status(200).send(`/articles/add`));
-articlesRouter.get(`/:id`, (req, res) =>
-  res.status(200).send(`/articles/` + Number.parseInt(req.params.id, 10))
+articlesRoutes.get(`/add`, (req, res) => res.status(200).render(`new-post`));
+articlesRoutes.get(`/:id`, (req, res) => res.status(200).render(`post`));
+articlesRoutes.get(`/edit/:id`, (req, res) =>
+  res.status(200).render(`new-post`)
 );
-articlesRouter.get(`/edit/:id`, (req, res) =>
-  res.status(200).send(`/articles/edit/` + Number.parseInt(req.params.id, 10))
-);
-articlesRouter.get(`/category/:id`, (req, res) =>
-  res
-    .status(200)
-    .send(`/articles/category/` + Number.parseInt(req.params.id, 10))
+articlesRoutes.get(`/category/:id`, (req, res) =>
+  res.status(200).render(`articles-by-category.pug`)
 );
 
 module.exports = {
-  articlesRouter,
+  articlesRoutes,
 };

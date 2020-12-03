@@ -1,11 +1,11 @@
 "use strict";
 
-const { Router } = require(`express`);
-const myRouter = new Router();
+const {Router} = require(`express`);
+const myRoutes = new Router();
 
-myRouter.get(`/`, (req, res) => res.status(200).send(`/my`));
-myRouter.get(`/comments`, (req, res) => res.status(200).send(`/my/comments`));
+myRoutes.get(`/`, (req, res) => res.status(200).send(`my`));
+myRoutes.get(`/comments`, (req, res) => res.status(200).render(`comments`));
 
 module.exports = {
-  myRouter,
+  myRoutes,
 };

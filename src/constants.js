@@ -19,6 +19,8 @@ const HttpCode = {
 
 const PORT = 8080;
 
+const PUBLIC_DIR = `public`;
+
 module.exports = {
   DEFAULT_COMMAND,
   USER_ARGV_INDEX,
@@ -26,4 +28,5 @@ module.exports = {
   DAY_LENGTH_MILLISECONDS,
   HttpCode,
   PORT,
+  PUBLIC_DIR,
 };
