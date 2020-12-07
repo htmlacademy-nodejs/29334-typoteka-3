@@ -21,6 +21,8 @@ const PORT = 8080;
 
 const PUBLIC_DIR = `public`;
 
+const MOCKS_FILENAME = `mocks.json`;
+
 module.exports = {
   DEFAULT_COMMAND,
   USER_ARGV_INDEX,
@@ -29,4 +31,5 @@ module.exports = {
   HttpCode,
   PORT,
   PUBLIC_DIR,
+  MOCKS_FILENAME,
 };
