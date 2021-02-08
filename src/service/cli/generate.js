@@ -1,15 +1,21 @@
 "use strict";
 
-
 const chalk = require(`chalk`);
 const fs = require(`fs`).promises;
-const { getRandomInt, shuffle } = require(`../../utils.js`);
-const { ExitCode, DAY_LENGTH_MILLISECONDS } = require(`../../constants.js`);
+const {getRandomInt, shuffle} = require(`../../utils.js`);
+const {
+  ExitCode,
+  DAY_LENGTH_MILLISECONDS,
+  MAX_ID_LENGTH,
+} = require(`../../constants.js`);
+const {nanoid} = require(`nanoid`);
 const FILE_ANNOUNCE_PATH = `./data/announce.txt`;
 const FILE_TITLES_PATH = `./data/titles.txt`;
 const FILE_CATEGORIES_PATH = `./data/categories.txt`;
+const FILE_COMMENTS_PATH = `./data/comments.txt`;
 const DEFAULT_COUNT = 1;
 const MAX_POSTS = 1000;
+const MAX_COMMENTS = 5;
 const FILE_NAME = `mocks.json`;
 
 const readContent = async (filePath) => {
@@ -22,23 +28,32 @@ const readContent = async (filePath) => {
   }
 };
 
-
-const generatePosts = (cnt, titles, announces, categories) => {
+const generatePosts = (cnt, titles, announces, categories, comments) => {
   return new Array(cnt).fill(``).map(() => {
     const rndDate = new Date(
       Date.now() - getRandomInt(1, 91) * DAY_LENGTH_MILLISECONDS
     );
     return {
+      id: nanoid(MAX_ID_LENGTH),
       title: titles[getRandomInt(0, titles.length - 1)],
       createdDate: `${rndDate.toLocaleDateString()} ${rndDate.toLocaleTimeString()}`,
       announce: shuffle(announces).slice(0, 5).join(` `),
       fullText: shuffle(announces)
         .slice(0, getRandomInt(0, announces.length - 1))
         .join(` `),
-      сategory: shuffle(categories).slice(0, categories.length - 1),
+      category: [categories[getRandomInt(0, categories.length - 1)]],
+      comments: generateComments(getRandomInt(1, MAX_COMMENTS), comments),
     };
   });
 };
+
+const generateComments = (count, comments) =>
+  Array(count)
+    .fill({})
+    .map(() => ({
+      id: nanoid(MAX_ID_LENGTH),
+      text: shuffle(comments).slice(0, getRandomInt(1, 3)).join(` `),
+    }));
 
 module.exports = {
   name: `--generate`,
@@ -53,6 +68,9 @@ module.exports = {
     const categories = await (await readContent(FILE_CATEGORIES_PATH)).filter(
       (it) => it !== ``
     );
+    const comments = await (await readContent(FILE_COMMENTS_PATH)).filter(
+      (it) => it !== ``
+    );
     const countPosts = Number.parseInt(cnt, 10) || DEFAULT_COUNT;
     if (countPosts > MAX_POSTS) {
       console.error(chalk.red(`Не больше 1000 объявлений`));
@@ -60,7 +78,7 @@ module.exports = {
     }
 
     const content = JSON.stringify(
-      generatePosts(countPosts, titles, announces, categories)
+      generatePosts(countPosts, titles, announces, categories, comments)
     );
     try {
       await fs.writeFile(FILE_NAME, content);
