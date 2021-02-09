@@ -23,6 +23,8 @@ const PUBLIC_DIR = `public`;
 
 const MOCKS_FILENAME = `mocks.json`;
 
+const MAX_ID_LENGTH = 6;
+
 module.exports = {
   DEFAULT_COMMAND,
   USER_ARGV_INDEX,
@@ -32,4 +34,5 @@ module.exports = {
   PORT,
   PUBLIC_DIR,
   MOCKS_FILENAME,
+  MAX_ID_LENGTH,
 };
