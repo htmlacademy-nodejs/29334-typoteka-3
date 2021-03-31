@@ -31,7 +31,7 @@ const readContent = async (filePath) => {
 const generatePosts = (cnt, titles, announces, categories, comments) => {
   return new Array(cnt).fill(``).map(() => {
     const rndDate = new Date(
-      Date.now() - getRandomInt(1, 91) * DAY_LENGTH_MILLISECONDS
+        Date.now() - getRandomInt(1, 91) * DAY_LENGTH_MILLISECONDS
     );
     return {
       id: nanoid(MAX_ID_LENGTH),
@@ -60,16 +60,16 @@ module.exports = {
   async run(args) {
     const [cnt] = args;
     const announces = await (await readContent(FILE_ANNOUNCE_PATH)).filter(
-      (it) => it !== ``
+        (it) => it !== ``
     );
     const titles = await (await readContent(FILE_TITLES_PATH)).filter(
-      (it) => it !== ``
+        (it) => it !== ``
     );
     const categories = await (await readContent(FILE_CATEGORIES_PATH)).filter(
-      (it) => it !== ``
+        (it) => it !== ``
     );
     const comments = await (await readContent(FILE_COMMENTS_PATH)).filter(
-      (it) => it !== ``
+        (it) => it !== ``
     );
     const countPosts = Number.parseInt(cnt, 10) || DEFAULT_COUNT;
     if (countPosts > MAX_POSTS) {
@@ -78,7 +78,7 @@ module.exports = {
     }
 
     const content = JSON.stringify(
-      generatePosts(countPosts, titles, announces, categories, comments)
+        generatePosts(countPosts, titles, announces, categories, comments)
     );
     try {
       await fs.writeFile(FILE_NAME, content);

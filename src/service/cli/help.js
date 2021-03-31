@@ -6,7 +6,7 @@ module.exports = {
   name: `--help`,
   run() {
     console.info(
-      chalk.grey(`
+        chalk.grey(`
         Гайд:
         service.js <command>
         Команды:

@@ -10,13 +10,13 @@ const postRoutes = new Router();
 postRoutes.get(`/`, async (req, res) => {
   try {
     const fileContent = await fs.readFile(
-      join(__dirname, `..`, `..`, `..`, `..`, MOCKS_FILENAME)
+        join(__dirname, `..`, `..`, `..`, `..`, MOCKS_FILENAME)
     );
     const mocks = JSON.parse(fileContent);
     return res.json(mocks);
   } catch (err) {
     const empty = [];
-    res.status(HttpCode.OK).json(empty);
+    return res.status(HttpCode.OK).json(empty);
   }
 });
 

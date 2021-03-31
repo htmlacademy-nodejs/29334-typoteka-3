@@ -6,10 +6,10 @@ const {MAX_ID_LENGTH} = require(`../../constants`);
 class CommentService {
   create(article, comment) {
     const newComment = Object.assign(
-      {
-        id: nanoid(MAX_ID_LENGTH),
-      },
-      comment
+        {
+          id: nanoid(MAX_ID_LENGTH),
+        },
+        comment
     );
 
     article.comments.push(newComment);
